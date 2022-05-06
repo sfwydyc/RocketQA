@@ -14,8 +14,7 @@ In recent years, the dense retrievers based on pre-trained language models have 
 * ***Easy-to-use***: By integrating this toolkit with [JINA](https://jina.ai/), 🚀RocketQA can help developers build an end-to-end retrieval system and question answering system with several lines of code. <img src="https://github.com/PaddlePaddle/RocketQA/blob/main/RocketQA_flow.png" alt="" align=center />  
 
 ## News
-* April 29, 2022: Training function is added to RocketQA toolkit.
-* April 29, 2022: The baseline models of **DuReader<sub>retrieval</sub>** (both cross encoder and dual encoder) are available in RocketQA models now. You can use them directly by `rocketqa.load_model`.
+* April 29, 2022: **Training function** is added to RocketQA toolkit. And the baseline models of **DuReader<sub>retrieval</sub>** (both cross encoder and dual encoder) are available in RocketQA models.
 * March 30, 2022: The baseline of **DuReader<sub>retrieval</sub>** [leaderboard](https://aistudio.baidu.com/aistudio/competition/detail/157/0/introduction) was released. [[code/model]](https://github.com/PaddlePaddle/RocketQA/tree/main/research/DuReader-Retrieval-Baseline)
 * March 30, 2022: We released **DuReader<sub>retrieval</sub>**, a large-scale Chinese benchmark for passage retrieval. The dataset contains over 90K questions and 8M passages from Baidu Search. [[paper]](https://arxiv.org/abs/2203.10232) [[data]](https://github.com/baidu/DuReader/tree/master/DuReader-Retrieval)
 * December 3, 2021: The toolkit of dense retriever RocketQA was released, including the first chinese dense retrieval model trained on DuReader. 
@@ -39,7 +38,7 @@ $ pip install paddlepaddle-gpu
 $ pip install paddlepaddle
 ```
 
-Second, install rocketqa package:
+Second, install rocketqa package (latest version: 1.1.0):
 ```bash
 $ pip install rocketqa
 ```
@@ -81,10 +80,10 @@ cd examples/faiss_example/
 pip3 install -r requirements.txt
 
 # Generate vector representations and build a libray for your Documents
-python3 index.py en ../marco.tp.1k marco_index
+python3 index.py zh ../data/dureader.para test_index
 
 # Start a web service on http://localhost:8888/rocketqa
-python3 rocketqa_service.py en ../marco.tp.1k marco_index
+python3 rocketqa_service.py zh ../data/dureader.para test_index
 
 # Try some questions related to the indexed Documents
 python3 query.py
@@ -160,13 +159,13 @@ dot_products = dual_encoder.matching(query=query_list, para=para_list)
 ```
 
 ####  Train Your Own Model
-To train your own models, you can use 'train()' function with your dataset and parameters.The training data format refers to ./examples/data/cross.train.tsv, which contains 4 columns: query, title, para, label (0 or 1), separated by "\t"
+To train your own models, you can use `train()` function with your dataset and parameters. The training data contains 4 columns: query, title, para, label (0 or 1), separated by "\t". For detail about parameters and dataset, please refer to './examples/example.py'
 
 ```python
 import rocketqa
 
 # init cross encoder, and set device and batch_size
-cross_encoder = rocketqa.load_model(model="zh_dureader_ce_v2", use_cuda=True, device_id=0, batch_size=32)
+cross_encoder = rocketqa.load_model(model="zh_dureader_ce", use_cuda=True, device_id=0, batch_size=32)
 
 # finetune cross encoder based on "zh_dureader_ce_v2"
 cross_encoder.train('./examples/data/cross.train.tsv', 2, 'ce_models', save_steps=1000, learning_rate=1e-5, log_folder='log_ce')

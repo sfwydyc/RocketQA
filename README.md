@@ -106,32 +106,32 @@ Returns the model specified by the input parameter. It can initialize both dual 
 ### Dual encoder
 Dual-encoder returned by "load_model()" supports the following functions:
 
-#### [`model.encode_query(query: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/3a99cf2720486df8cc54acc0e9ce4cbcee993413/rocketqa/predict/dual_encoder.py#L126)
+#### [`model.encode_query(query: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/1746b938d659c7f8d0b9f960e3199dcbd945adac/rocketqa/encoder/dual_encoder.py#L151)
 
 Given a list of queries, returns their representation vectors encoded by model.
 
-#### [`model.encode_para(para: List[str], title: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/3a99cf2720486df8cc54acc0e9ce4cbcee993413/rocketqa/predict/dual_encoder.py#L154)
+#### [`model.encode_para(para: List[str], title: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/1746b938d659c7f8d0b9f960e3199dcbd945adac/rocketqa/encoder/dual_encoder.py#L179)
 
 Given a list of paragraphs and their corresponding titles (optional), returns their representations vectors encoded by model.
 
-#### [`model.matching(query: List[str], para: List[str], title: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/3a99cf2720486df8cc54acc0e9ce4cbcee993413/rocketqa/predict/dual_encoder.py#L187)
+#### [`model.matching(query: List[str], para: List[str], title: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/1746b938d659c7f8d0b9f960e3199dcbd945adac/rocketqa/encoder/dual_encoder.py#L212)
 
 Given a list of queries and paragraphs (and titles), returns their matching scores (dot product between two representation vectors). 
 
-#### [`model.train(train_set: str, epoch: int, save_model_path: str, args)`](https://github.com/sfwydyc/my-rocketqa/blob/594877ca505053cb67c6b9b689dbbf237f074ac4/rocketqa/encoder/dual_encoder.py#L247)
+#### [`model.train(train_set: str, epoch: int, save_model_path: str, args)`](https://github.com/PaddlePaddle/RocketQA/blob/1746b938d659c7f8d0b9f960e3199dcbd945adac/rocketqa/encoder/dual_encoder.py#L247)
 
-Given the hyperparameters `train_set`, `epoch` and `save_model_path`, you can train your own dual encoder model or finetune our models. Other settings like `save_steps` and `learning_rate` can also be set in `args`. Please see examples/example.py for detail.
+Given the hyperparameters `train_set`, `epoch` and `save_model_path`, you can train your own dual encoder model or finetune our models. Other settings like `save_steps` and `learning_rate` can also be set in `args`. Please refer to examples/example.py for detail.
 
 ### Cross encoder
 Cross-encoder returned by "load_model()" supports the following function:
 
-#### [`model.matching(query: List[str], para: List[str], title: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/3a99cf2720486df8cc54acc0e9ce4cbcee993413/rocketqa/predict/cross_encoder.py#L129)
+#### [`model.matching(query: List[str], para: List[str], title: List[str])`](https://github.com/PaddlePaddle/RocketQA/blob/1746b938d659c7f8d0b9f960e3199dcbd945adac/rocketqa/encoder/cross_encoder.py#L156)
 
 Given a list of queries and paragraphs (and titles), returns their matching scores (probability that the paragraph is the query's right answer).
   
-#### [`model.train(train_set: str, epoch: int, save_model_path: str, args)`](https://github.com/sfwydyc/my-rocketqa/blob/594877ca505053cb67c6b9b689dbbf237f074ac4/rocketqa/encoder/dual_encoder.py#L247)
+#### [`model.train(train_set: str, epoch: int, save_model_path: str, args)`](https://github.com/PaddlePaddle/RocketQA/blob/1746b938d659c7f8d0b9f960e3199dcbd945adac/rocketqa/encoder/cross_encoder.py#L193)
 
-Given the hyperparameters `train_set`, `epoch` and `save_model_path`, you can train your own cross encoder model or finetune our models. Other settings like `save_steps` and `learning_rate` can also be set in `args`. Please see examples/example.py for detail.
+Given the hyperparameters `train_set`, `epoch` and `save_model_path`, you can train your own cross encoder model or finetune our models. Other settings like `save_steps` and `learning_rate` can also be set in `args`. Please refer to examples/example.py for detail.
 
 
 ### Examples
@@ -159,7 +159,7 @@ dot_products = dual_encoder.matching(query=query_list, para=para_list)
 ```
 
 ####  Train Your Own Model
-To train your own models, you can use `train()` function with your dataset and parameters. The training data contains 4 columns: query, title, para, label (0 or 1), separated by "\t". For detail about parameters and dataset, please refer to './examples/example.py'
+To train your own models, you can use `train()` function with your dataset and parameters. Training data contains 4 columns: query, title, para, label (0 or 1), separated by "\t". For detail about parameters and dataset, please refer to './examples/example.py'
 
 ```python
 import rocketqa
